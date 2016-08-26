@@ -2,7 +2,7 @@
 
 function BuilderElement($rootElement, features) {
 	'use strict';
-	
+
 	this.checkFeatures(features)
 
 	this.$el = $('<div style="position: absolute; top: 10px; left: 10px; width: 150px; height: 90px; background-color: green;"></div>')
@@ -16,6 +16,10 @@ function BuilderElement($rootElement, features) {
 	this.installFeatures(features, this.$el)
 
 	$($rootElement).append(this.$el)
+}
+
+BuilderElement.prototype.clear = function clear() {
+	this.handleMouseUp()
 }
 
 BuilderElement.prototype.supportedFeatures = [
@@ -57,7 +61,7 @@ BuilderElement.prototype.handleMouseDown = function handleMouseDown(e) {
 	this.$el.on('mousemove', this.handleMouseMove)
 }
 
-BuilderElement.prototype.handleMouseUp = function handleMouseUp(e) {
+BuilderElement.prototype.handleMouseUp = function handleMouseUp() {
 	this.x = 0
 	this.y = 0
 
@@ -67,6 +71,8 @@ BuilderElement.prototype.handleMouseUp = function handleMouseUp(e) {
 BuilderElement.prototype.handleMouseMove = function handleMouseMove(e) {
 	var offsetX = e.clientX - this.x
 	var offsetY = e.clientY - this.y
+
+	console.log(offsetY)
 
 	this.x = e.clientX
 	this.y = e.clientY
