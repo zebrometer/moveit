@@ -13,11 +13,18 @@
 	</body>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<script src="element.js"></script>
 	<script src="index.js"></script>
 
 	<script>
 		$(document).ready(function() {
-			builder()
+			var canvas = builder('.builder')
+
+			$('.add-element').on('click', function() {
+				canvas.addElement(['draggable', 'resizable'])
+				// alert('still works')
+				//builder.addElement(['draggable', 'resizable'])
+			})
 		})
 	</script>
 </html>
