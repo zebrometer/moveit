@@ -1,0 +1,25 @@
+
+
+.builder {
+	height: 700px;
+	background-color: #777;
+	position: relative;
+}
+
+.header {
+	padding: 30px 10px;
+}
+
+.header > button {
+	padding: 10px;
+}
+
+.draggable {
+	cursor: move;
+}
+
+.draggable:active {
+	border: #999 solid 1px !important;
+	border-radius: 2px;
+	z-index: 1000;
+}
