@@ -44,11 +44,17 @@ BuilderElement.prototype.checkFeatures = function checkFeatures(features) {
 }
 
 BuilderElement.prototype.installFeatures = function installFeatures(features) {
-	if (this.$el.hasClass('draggable')/* || $el.hasClass('resizable')*/) {
-		this.handleMouseMove = this.handleMouseMove.bind(this)
-		this.handleMouseDown = this.handleMouseDown.bind(this)
-		this.handleMouseUp   = this.handleMouseUp.bind(this)
+	this.handleMouseMove = this.handleMouseMove.bind(this)
+	this.handleMouseDown = this.handleMouseDown.bind(this)
+	this.handleMouseUp   = this.handleMouseUp.bind(this)
+	this.handleResize    = this.handleResize.bind(this)
+	this.handleMouseDrag = this.handleMouseDrag.bind(this)
 
+	if (this.$el.hasClass('resizable')) {
+		this.$el.on('mousemove', this.handleMouseMove)
+	}
+
+	if (this.$el.hasClass('draggable')/* || $el.hasClass('resizable')*/) {
 		this.$el.on('mousedown', this.handleMouseDown)
 		this.$el.on('mouseup',   this.handleMouseUp)
 	}
@@ -58,21 +64,29 @@ BuilderElement.prototype.handleMouseDown = function handleMouseDown(e) {
 	this.x = e.clientX
 	this.y = e.clientY
 
-	this.$el.on('mousemove', this.handleMouseMove)
+	this.$el.on('mousemove', this.handleMouseDrag)
 }
 
 BuilderElement.prototype.handleMouseUp = function handleMouseUp() {
 	this.x = 0
 	this.y = 0
 
-	this.$el.off('mousemove', this.handleMouseMove)
+	this.$el.off('mousemove', this.handleMouseDrag)
 }
 
 BuilderElement.prototype.handleMouseMove = function handleMouseMove(e) {
+	if (this.$el.hasClass('resizable')) {
+		console.log(e.clientX + ', ' + e.clientX)
+		// this.handleResize(e)
+	}
+	// if (this.$el.hasClass('draggable')) {
+	// 	this.handleMouseDrag(e)
+	// }
+}
+
+BuilderElement.prototype.handleMouseDrag = function handleMouseDrag(e) {
 	var offsetX = e.clientX - this.x
 	var offsetY = e.clientY - this.y
-
-	console.log(offsetY)
 
 	this.x = e.clientX
 	this.y = e.clientY
@@ -88,4 +102,8 @@ BuilderElement.prototype.handleMouseMove = function handleMouseMove(e) {
 
 	this.$el.css('top',  newY)
 	this.$el.css('left', newX)
+}
+
+BuilderElement.prototype.handleResize = function handleResize(e) {
+
 }
